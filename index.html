@@ -1,0 +1,1858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Practice - English Conditionals Mastery (Zero, First, Second, Third)</title>
+    <style>
+        :root {
+            --bg-base: #0b1120;
+            --bg-card: #131d33;
+            --bg-elevated: #1a2744;
+            --bg-input: #0f172a;
+            --accent-gold: #f59e0b;
+            --accent-gold-hover: #d97706;
+            --accent-cyan: #38bdf8;
+            --accent-purple: #c084fc;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-subtle: #243556;
+            --border-active: #475569;
+            --locked-color: #f59e0b;
+            --locked-bg: rgba(245, 158, 11, 0.14);
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+            --shadow-elevation: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header.hud {
+            background-color: var(--bg-card);
+            border-bottom: 2px solid var(--border-subtle);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+
+        .hud-wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0.75rem 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .detective-branding {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+        }
+
+        .badge-crest {
+            width: 44px;
+            height: 44px;
+            background: radial-gradient(circle, #f59e0b 20%, #78350f 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            border: 2px solid #fbbf24;
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
+        }
+
+        .case-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: 0.5px;
+        }
+
+        .case-subtitle {
+            font-size: 0.75rem;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .hud-meta-group {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .student-pill {
+            background-color: var(--bg-elevated);
+            padding: 0.4rem 0.9rem;
+            border-radius: 9999px;
+            border: 1px solid var(--border-subtle);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .timer-badge {
+            background-color: #030712;
+            border: 1px solid #374151;
+            padding: 0.35rem 0.85rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: monospace;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+        }
+
+        .timer-btn {
+            background: transparent;
+            border: 1px solid var(--border-subtle);
+            color: var(--text-muted);
+            width: 28px;
+            height: 28px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .timer-btn:hover {
+            color: #fff;
+            border-color: var(--accent-gold);
+        }
+
+        nav.stage-progress {
+            background-color: #0d1424;
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 0.6rem 1rem;
+        }
+
+        .stepper-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .stepper-container::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 4%;
+            right: 4%;
+            height: 2px;
+            background-color: var(--border-subtle);
+            z-index: 1;
+            transform: translateY(-50%);
+        }
+
+        .step-bubble {
+            position: relative;
+            z-index: 2;
+            background-color: var(--bg-card);
+            border: 2px solid var(--border-subtle);
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+        }
+
+        .step-bubble.current {
+            background-color: var(--accent-gold);
+            color: #000;
+            border-color: #fbbf24;
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+        }
+
+        .step-bubble.done {
+            background-color: #1e293b;
+            color: var(--accent-cyan);
+            border-color: var(--accent-cyan);
+        }
+
+        main.app-shell {
+            flex: 1;
+            max-width: 1000px;
+            width: 100%;
+            margin: 1.75rem auto;
+            padding: 0 1.25rem 3rem;
+        }
+
+        .dossier-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow-elevation);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .stage-header {
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 1.25rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .stage-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .stage-desc {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            margin-top: 0.35rem;
+        }
+
+        .stage-tag {
+            background-color: rgba(245, 158, 11, 0.15);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            color: var(--accent-gold);
+            font-size: 0.78rem;
+            padding: 0.35rem 0.8rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .evidence-dossier-box {
+            background-color: var(--bg-elevated);
+            border: 1px solid var(--border-subtle);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .case-prompt {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 1.25rem;
+            line-height: 1.6;
+        }
+
+        .concept-cue {
+            background: rgba(56, 189, 248, 0.08);
+            border-left: 3px solid var(--accent-cyan);
+            padding: 0.6rem 0.9rem;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.85rem;
+            color: #bae6fd;
+            margin-bottom: 1.25rem;
+            font-weight: 600;
+        }
+
+        .options-stack {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .options-stack.grid-2 {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .opt-btn {
+            background-color: #17233f;
+            border: 2px solid var(--border-subtle);
+            border-radius: 8px;
+            color: var(--text-main);
+            padding: 0.9rem 1.25rem;
+            font-size: 0.98rem;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            transition: border-color 0.2s, background-color 0.2s, transform 0.1s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .opt-btn:hover:not(:disabled) {
+            border-color: var(--accent-gold);
+            background-color: #1c2b4c;
+        }
+
+        .opt-btn.is-locked {
+            border-color: var(--locked-color) !important;
+            background-color: var(--locked-bg) !important;
+            color: #fff !important;
+            box-shadow: 0 0 0 1px var(--locked-color);
+        }
+
+        .opt-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.9;
+        }
+
+        .opt-btn .lock-indicator {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            display: none;
+        }
+
+        .opt-btn.is-locked .lock-indicator {
+            display: inline-block;
+        }
+
+        .action-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .lock-status-note {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .btn-proceed {
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-hover));
+            color: #000;
+            font-weight: 700;
+            font-size: 0.95rem;
+            padding: 0.75rem 1.6rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s, opacity 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-proceed:disabled {
+            background: #334155;
+            color: #94a3b8;
+            cursor: not-allowed;
+            transform: none;
+            opacity: 0.6;
+        }
+
+        .btn-proceed:hover:not(:disabled) {
+            transform: translateY(-2px);
+        }
+
+        .forensic-text-card {
+            background: #0d1424;
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 1.5rem;
+            font-size: 1.15rem;
+            line-height: 2.2;
+            margin-bottom: 1.25rem;
+        }
+
+        .forensic-token {
+            padding: 2px 6px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: inline-block;
+        }
+
+        .forensic-token:hover:not(.locked) {
+            background-color: rgba(245, 158, 11, 0.2);
+            text-decoration: underline;
+        }
+
+        .forensic-token.selected-locked {
+            background-color: rgba(245, 158, 11, 0.35);
+            border-bottom: 2px solid var(--accent-gold);
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .forensic-token.locked {
+            cursor: default;
+        }
+
+        .scramble-pool {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            padding: 1rem;
+            background: #0d1424;
+            border: 1px dashed var(--border-subtle);
+            border-radius: 8px;
+            min-height: 70px;
+            margin-bottom: 1rem;
+        }
+
+        .scramble-target {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            padding: 1rem;
+            background: var(--bg-elevated);
+            border: 2px solid var(--border-subtle);
+            border-radius: 8px;
+            min-height: 70px;
+            margin-bottom: 1rem;
+            align-items: center;
+        }
+
+        .tile-word {
+            background-color: #1e293b;
+            border: 1px solid #475569;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.15s;
+        }
+
+        .tile-word:hover:not(.locked) {
+            border-color: var(--accent-gold);
+            background-color: #334155;
+            transform: translateY(-2px);
+        }
+
+        .tile-word.locked {
+            cursor: not-allowed;
+            opacity: 0.85;
+            background-color: #162035;
+            border-color: var(--accent-gold);
+        }
+
+        .login-wrap {
+            max-width: 560px;
+            margin: 2.5rem auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-elevation);
+            text-align: center;
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 1.25rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 0.4rem;
+            text-transform: uppercase;
+        }
+
+        .form-input {
+            width: 100%;
+            background: var(--bg-input);
+            border: 1px solid var(--border-subtle);
+            color: #fff;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .form-input:focus {
+            border-color: var(--accent-gold);
+        }
+
+        .rating-badge {
+            display: inline-block;
+            padding: 0.5rem 1.25rem;
+            border-radius: 9999px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .rating-master {
+            background-color: rgba(16, 185, 129, 0.15);
+            border: 1px solid #10b981;
+            color: #34d399;
+        }
+
+        .rating-senior {
+            background-color: rgba(56, 189, 248, 0.15);
+            border: 1px solid #38bdf8;
+            color: #38bdf8;
+        }
+
+        .rating-cadet {
+            background-color: rgba(245, 158, 11, 0.15);
+            border: 1px solid #f59e0b;
+            color: #fbbf24;
+        }
+
+        .review-table-wrap {
+            overflow-x: auto;
+            margin-top: 1.5rem;
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+        }
+
+        table.dossier-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+            text-align: left;
+        }
+
+        table.dossier-table th {
+            background-color: #0d1424;
+            color: var(--text-muted);
+            padding: 0.85rem 1rem;
+            font-weight: 700;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        table.dossier-table td {
+            padding: 0.85rem 1rem;
+            border-bottom: 1px solid var(--border-subtle);
+            vertical-align: top;
+        }
+
+        table.dossier-table tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .status-pill {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.75rem;
+        }
+
+        .status-pill.correct {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            border: 1px solid #10b981;
+        }
+
+        .status-pill.incorrect {
+            background: rgba(244, 63, 94, 0.2);
+            color: #f43f5e;
+            border: 1px solid #f43f5e;
+        }
+
+        .user-msg-box {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #1e293b;
+            border: 1px solid var(--accent-gold);
+            color: #fff;
+            padding: 0.85rem 1.25rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            z-index: 1000;
+            display: none;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @media print {
+            header.hud, nav.stage-progress, .action-row, .no-print, .user-msg-box {
+                display: none !important;
+            }
+            body {
+                background: #ffffff !important;
+                color: #000000 !important;
+            }
+            .dossier-card {
+                box-shadow: none !important;
+                border: 1px solid #cbd5e1 !important;
+                background: #ffffff !important;
+            }
+            table.dossier-table th {
+                background-color: #f1f5f9 !important;
+                color: #000000 !important;
+                border-bottom: 2px solid #334155 !important;
+            }
+            table.dossier-table td {
+                color: #000000 !important;
+                border-bottom: 1px solid #cbd5e1 !important;
+            }
+            .rating-badge {
+                border: 2px solid #000000 !important;
+                color: #000000 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Notification Toast Box -->
+    <div id="user-alert-toast" class="user-msg-box"></div>
+
+    <header class="hud">
+        <div class="hud-wrap">
+            <div class="detective-branding">
+                <div class="badge-crest">⚡</div>
+                <div>
+                    <div class="case-title">Class Practice</div>
+                    <div class="case-subtitle">English Conditionals Mastery (Zero, 1st, 2nd, 3rd) • CEFR A2–B1</div>
+                    <div style="font-size: 0.72rem; color: #94a3b8; font-weight: 600;">designed by Muhammad Shahzad</div>
+                </div>
+            </div>
+
+            <div class="hud-meta-group">
+                <div class="student-pill" id="hud-student-tag" style="display: none;">
+                    <span>Student:</span>
+                    <strong id="hud-name-display" style="color: var(--accent-gold);">Author</strong>
+                </div>
+
+                <div class="timer-badge">
+                    <span id="timer-display">60:00</span>
+                    <button class="timer-btn" id="timer-toggle-btn" title="Pause / Resume Timer">⏸</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Stepper Navigation Bar -->
+    <nav class="stage-progress" id="stage-nav-bar" style="display: none;">
+        <div class="stepper-container">
+            <div class="step-bubble current" id="step-node-1" title="1. Zero Conditional">0</div>
+            <div class="step-bubble" id="step-node-2" title="2. First Conditional">1</div>
+            <div class="step-bubble" id="step-node-3" title="3. Second Conditional">2</div>
+            <div class="step-bubble" id="step-node-4" title="4. Third Conditional">3</div>
+            <div class="step-bubble" id="step-node-5" title="5. Forensic Error Hunt">5</div>
+            <div class="step-bubble" id="step-node-6" title="6. Syntax Scramble">6</div>
+            <div class="step-bubble" id="step-node-7" title="Final Dossier">★</div>
+        </div>
+    </nav>
+
+    <main class="app-shell">
+
+        <!-- ================= COVER PAGE / LOGIN PORTAL ================= -->
+        <section id="screen-login" class="login-wrap">
+            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">📖</div>
+            <h2 style="color: #fff; margin-bottom: 0.25rem;">Class Practice</h2>
+            <div style="font-size: 0.88rem; color: var(--accent-gold); font-weight: 700; margin-bottom: 0.85rem; letter-spacing: 0.5px;">
+                designed by Muhammad Shahzad
+            </div>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+                Targeted Diagnostics on English Conditional Structures:
+                <strong>Zero Conditional</strong> (General Truths), <strong>First Conditional</strong> (Real Possibilities), 
+                <strong>Second Conditional</strong> (Hypothetical Situations), and <strong>Third Conditional</strong> (Past Regrets/Counterfactuals).
+            </p>
+
+            <form id="login-form" onsubmit="handleStartGame(event)">
+                <div class="form-group">
+                    <label class="form-label" for="input-name">Student Full Name</label>
+                    <input type="text" id="input-name" class="form-input" placeholder="e.g., Tariq Al-Busaidi" required autocomplete="name">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="input-section">Student ID / University Campus & Section</label>
+                    <input type="text" id="input-section" class="form-input" placeholder="e.g., UTAS-Ibra / Section 13" required>
+                </div>
+
+                <div style="background: rgba(245, 158, 11, 0.08); border-left: 3px solid var(--accent-gold); padding: 0.75rem; border-radius: 4px; margin-bottom: 1.5rem; text-align: left; font-size: 0.82rem; color: #fde68a;">
+                    <strong>Strict Evaluation Protocol:</strong><br>
+                    • One attempt only per item: your selection locks immediately upon clicking.<br>
+                    • Full Socratic feedback, scores, and linguistic breakdowns are provided in the final dossier.
+                </div>
+
+                <button type="submit" class="btn-proceed" style="width: 100%; justify-content: center;">
+                    Authorize Credentials & Open Assessment →
+                </button>
+            </form>
+        </section>
+
+        <!-- ================= GAMEPLAY CONTAINER ================= -->
+        <section id="screen-gameplay" style="display: none;">
+            <div class="dossier-card">
+                
+                <div class="stage-header">
+                    <div>
+                        <h3 class="stage-title" id="stage-title-text">Stage 1: Zero Conditional (Scientific & General Truths)</h3>
+                        <p class="stage-desc" id="stage-desc-text">Targeting universal facts and habitual routines: If/When + Present Simple, Present Simple.</p>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 0.35rem;">
+                        <span class="stage-tag" id="stage-badge-text">STAGE 1 OF 6</span>
+                        <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;" id="question-tracker">Item 1 of 10</span>
+                    </div>
+                </div>
+
+                <div id="dynamic-stage-body"></div>
+
+                <div class="action-row">
+                    <span class="lock-status-note" id="lock-status-text">Select an option to immediately lock your answer.</span>
+                    <button class="btn-proceed" id="btn-next-question" disabled onclick="handleProceedNext()">
+                        Submit & Next Item →
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= FINAL COMPREHENSIVE DOSSIER ================= -->
+        <section id="screen-dossier" style="display: none;">
+            <div class="dossier-card">
+                <div style="text-align: center; border-bottom: 1px solid var(--border-subtle); padding-bottom: 1.5rem; margin-bottom: 1.5rem;">
+                    <div style="font-size: 2.2rem; margin-bottom: 0.5rem;">📜</div>
+                    <h2 style="color: #fff; font-size: 1.7rem; text-transform: uppercase; letter-spacing: 1px;">Official Evaluation Dossier</h2>
+                    <p style="color: var(--accent-gold); font-weight: 700; font-size: 0.95rem;">Class Practice • English Conditionals Mastery</p>
+                    <p style="color: #94a3b8; font-size: 0.82rem; font-weight: 600; margin-top: 0.35rem;">designed by Muhammad Shahzad</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; background: var(--bg-elevated); padding: 1.25rem; border-radius: 8px;">
+                    <div>
+                        <div class="form-label">Student Name</div>
+                        <div style="font-size: 1.1rem; font-weight: 800; color: #fff;" id="dossier-student-name">-</div>
+                    </div>
+                    <div>
+                        <div class="form-label">ID / Campus & Section</div>
+                        <div style="font-size: 1.1rem; font-weight: 800; color: #fff;" id="dossier-student-section">-</div>
+                    </div>
+                    <div>
+                        <div class="form-label">Total Score</div>
+                        <div style="font-size: 1.2rem; font-weight: 800; color: var(--accent-gold);" id="dossier-score-text">0 / 60 (0%)</div>
+                    </div>
+                    <div>
+                        <div class="form-label">Proficiency Tier</div>
+                        <div id="dossier-rank-container"></div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 1.5rem;">
+                    <h4 style="color: #fff; margin-bottom: 0.5rem;">Item-by-Item Socratic Linguistic Breakdown</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+                        Analyze your locked submissions alongside core conditional rules and clausal tense structures.
+                    </p>
+
+                    <div class="review-table-wrap">
+                        <table class="dossier-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 5%;">#</th>
+                                    <th style="width: 18%;">Conditional Category</th>
+                                    <th style="width: 29%;">Question Prompt / Context</th>
+                                    <th style="width: 15%;">Your Locked Choice</th>
+                                    <th style="width: 15%;">Correct Answer</th>
+                                    <th style="width: 18%;">Linguistic Explanation</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dossier-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; gap: 1rem;" class="no-print">
+                    <button class="btn-proceed" style="background: #334155; color: #fff;" onclick="window.print()">
+                        🖨️ Print / Save PDF Dossier
+                    </button>
+                    <button class="btn-proceed" onclick="location.reload()">
+                        🔄 Retake Practice Session
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        class DetectiveAudioEngine {
+            constructor() {
+                this.ctx = null;
+            }
+
+            init() {
+                if (!this.ctx) {
+                    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                    this.ctx = new AudioCtx();
+                }
+            }
+
+            playTone(freq, type, duration, gainLevel = 0.12) {
+                try {
+                    this.init();
+                    if (this.ctx.state === 'suspended') this.ctx.resume();
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = type;
+                    osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+                    gain.gain.setValueAtTime(gainLevel, this.ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + duration);
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start();
+                    osc.stop(this.ctx.currentTime + duration);
+                } catch(e) {}
+            }
+
+            lockSound() {
+                this.playTone(500, 'sine', 0.08, 0.1);
+            }
+
+            advanceSound() {
+                this.playTone(650, 'triangle', 0.1, 0.08);
+            }
+
+            fanfare() {
+                [440, 554, 659, 880].forEach((f, idx) => {
+                    setTimeout(() => this.playTone(f, 'triangle', 0.4, 0.15), idx * 100);
+                });
+            }
+        }
+
+        const audio = new DetectiveAudioEngine();
+
+        function showToast(msg) {
+            const toast = document.getElementById('user-alert-toast');
+            toast.textContent = msg;
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+
+        const GameData = {
+            studentName: "",
+            studentSection: "",
+            timerSeconds: 3600, // 60:00
+            timerRunning: true,
+            timerInterval: null,
+            currentStage: 1,
+            currentQuestionIdx: 0,
+            lockedAnswerForCurrent: null,
+            userSubmissions: [],
+
+            stages: [
+                // ================= STAGE 1 (ZERO CONDITIONAL: FACTS & GENERAL TRUTHS) =================
+                [
+                    {
+                        category: "Zero Conditional (Scientific Fact)",
+                        prompt: "If water reaches 100 degrees Celsius at sea level, it _______.",
+                        options: ["boils", "will boil", "would boil", "boiled"],
+                        correct: "boils",
+                        conceptCue: "Concept Cue: Zero Conditional expresses scientific laws and facts: [If + Present Simple, ... Present Simple].",
+                        explanation: "Scientific certainty takes the Zero Conditional: both condition and result require the Present Simple ('boils')."
+                    },
+                    {
+                        category: "Zero Conditional (Habitual Routine)",
+                        prompt: "When students _______ notifications on their smartphones, they lose study concentration.",
+                        options: ["receive", "will receive", "received", "would receive"],
+                        correct: "receive",
+                        conceptCue: "Concept Cue: General automatic habits use Present Simple in both clauses: [When + Present Simple, ... Present Simple].",
+                        explanation: "Habitual cause-and-effect: 'When students receive notifications... they lose concentration'."
+                    },
+                    {
+                        category: "Zero Conditional (Third-Person Singular Result)",
+                        prompt: "If an employee arrives late to the laboratory, the automated gate _______ access.",
+                        options: ["denies", "will deny", "denied", "would deny"],
+                        correct: "denies",
+                        conceptCue: "Concept Cue: The result clause in a zero conditional rule takes the Present Simple (third-person singular -s/-es).",
+                        explanation: "General rule: singular subject 'the automated gate' requires the 3rd-person singular Present Simple 'denies'."
+                    },
+                    {
+                        category: "Zero Conditional (Natural Law)",
+                        prompt: "If ice is exposed to direct sunlight in the desert, it _______ rapidly.",
+                        options: ["melts", "would melt", "melted", "will melt"],
+                        correct: "melts",
+                        conceptCue: "Concept Cue: Natural physical reactions use Present Simple in the main clause.",
+                        explanation: "Physical reality: 'If ice is exposed... it melts rapidly' (not a speculative future prediction)."
+                    },
+                    {
+                        category: "Zero Conditional (Negative Condition)",
+                        prompt: "Plants die if they _______ sufficient water and sunlight.",
+                        options: ["do not get", "will not get", "did not get", "would not get"],
+                        correct: "do not get",
+                        conceptCue: "Concept Cue: Negative present conditions take 'do/does not + base verb' in the Zero Conditional.",
+                        explanation: "General truth: plural subject 'they' takes 'do not get' in the Present Simple condition clause."
+                    },
+                    {
+                        category: "Zero Conditional (Clause Inversion)",
+                        prompt: "A computer system crashes if overheating _______ unchecked for several hours.",
+                        options: ["remains", "will remain", "would remain", "remained"],
+                        correct: "remains",
+                        conceptCue: "Concept Cue: When the 'if' clause comes second, it still requires the Present Simple for facts.",
+                        explanation: "Uncountable subject 'overheating' requires the singular Present Simple 'remains'."
+                    },
+                    {
+                        category: "Zero Conditional (Imperative/Instruction Result)",
+                        prompt: "If you observe a security breach, _______ the supervisor immediately.",
+                        options: ["notify", "will notify", "notified", "would notify"],
+                        correct: "notify",
+                        conceptCue: "Concept Cue: Zero Conditional instructions pair [If + Present Simple] with an imperative base verb.",
+                        explanation: "Direct operational commands take the base imperative verb: 'notify the supervisor'."
+                    },
+                    {
+                        category: "Zero Conditional (Interrogative Form)",
+                        prompt: "What happens to engine oil if the temperature _______ beyond normal operational limits?",
+                        options: ["rises", "will rise", "rose", "would rise"],
+                        correct: "rises",
+                        conceptCue: "Concept Cue: Interrogative zero conditionals retain Present Simple across both clauses.",
+                        explanation: "Singular subject 'temperature' takes Present Simple 'rises' to match 'What happens'."
+                    },
+                    {
+                        category: "Zero Conditional (Alternative Conjunction: Unless)",
+                        prompt: "Metal expands when heated unless the external pressure _______ extremely high.",
+                        options: ["is", "will be", "was", "would be"],
+                        correct: "is",
+                        conceptCue: "Concept Cue: 'Unless' means 'if not' and follows the same Zero Conditional Present Simple rule.",
+                        explanation: "'Unless the external pressure is high' uses the Present Simple for general physical conditions."
+                    },
+                    {
+                        category: "Zero Conditional (General Human Biology)",
+                        prompt: "If people _______ less than six hours of sleep regularly, their cognitive performance drops.",
+                        options: ["get", "will get", "got", "had gotten"],
+                        correct: "get",
+                        conceptCue: "Concept Cue: Biological facts use Present Simple plural base verbs.",
+                        explanation: "Plural subject 'people' pairs with base Present Simple 'get' to describe an established biological fact."
+                    }
+                ],
+
+                // ================= STAGE 2 (FIRST CONDITIONAL: REAL FUTURE POSSIBILITIES) =================
+                [
+                    {
+                        category: "First Conditional (Real Future Possibility)",
+                        prompt: "If Tariq completes his foundation portfolio tonight, he _______ the final certificate tomorrow.",
+                        options: ["will receive", "receives", "would receive", "would have received"],
+                        correct: "will receive",
+                        conceptCue: "Concept Cue: First Conditional expresses real future outcomes: [If + Present Simple, ... will + base verb].",
+                        explanation: "Real future possibility: [If + completes (Present Simple), ... will receive (will + base verb)]."
+                    },
+                    {
+                        category: "First Conditional (Present Simple in 'If' Clause)",
+                        prompt: "If the lead detective _______ the witness statement, the trial will proceed on Monday.",
+                        options: ["approves", "will approve", "approved", "would approve"],
+                        correct: "approves",
+                        conceptCue: "Concept Cue: NEVER use 'will' inside the 'if' clause; use the Present Simple instead.",
+                        explanation: "English grammar forbids 'will' inside the conditional clause: use 3rd-person singular 'approves'."
+                    },
+                    {
+                        category: "First Conditional (Negative Result)",
+                        prompt: "If students do not review the grammar feedback, they _______ the diagnostic benchmark.",
+                        options: ["will not pass", "do not pass", "would not pass", "had not passed"],
+                        correct: "will not pass",
+                        conceptCue: "Concept Cue: The main clause indicates future consequence with 'will not + base verb' (won't).",
+                        explanation: "Future consequence of a present condition: 'they will not pass the diagnostic benchmark'."
+                    },
+                    {
+                        category: "First Conditional (Negative Condition)",
+                        prompt: "The research squad will lose valuable data unless the technician _______ the digital drive now.",
+                        options: ["backs up", "will back up", "backed up", "would back up"],
+                        correct: "backs up",
+                        conceptCue: "Concept Cue: 'Unless' introduces a present simple condition for future consequences.",
+                        explanation: "'Unless' takes the singular Present Simple 'backs up' for future consequence 'will lose'."
+                    },
+                    {
+                        category: "First Conditional (Modal Auxiliary in Main Clause: May/Can)",
+                        prompt: "If the weather remains clear in Nizwa, the patrol team _______ deploy drone surveillance.",
+                        options: ["can", "could", "would", "had"],
+                        correct: "can",
+                        conceptCue: "Concept Cue: First conditional main clauses can use modal verbs of real ability (can/may) instead of 'will'.",
+                        explanation: "'Can deploy' indicates real present/future capability in a First Conditional structure."
+                    },
+                    {
+                        category: "First Conditional (Reversed Clauses)",
+                        prompt: "The professor will cancel the afternoon lecture if the storm _______ stronger.",
+                        options: ["gets", "will get", "got", "would get"],
+                        correct: "gets",
+                        conceptCue: "Concept Cue: Even when the 'if' clause comes second, it strictly requires the Present Simple.",
+                        explanation: "Third-person singular 'the storm' requires 'gets' (Present Simple), not 'will get'."
+                    },
+                    {
+                        category: "First Conditional (Question Formulation)",
+                        prompt: "What will you do if the company _______ your scholarship application next week?",
+                        options: ["rejects", "will reject", "rejected", "would reject"],
+                        correct: "rejects",
+                        conceptCue: "Concept Cue: Future inquiry [What will you do...] requires [if + Present Simple].",
+                        explanation: "Singular subject 'the company' requires Present Simple 'rejects'."
+                    },
+                    {
+                        category: "First Conditional (Temporary State in Condition)",
+                        prompt: "If you _______ for the upcoming exam, you will achieve an outstanding score.",
+                        options: ["prepare", "will prepare", "prepared", "would prepare"],
+                        correct: "prepare",
+                        conceptCue: "Concept Cue: The condition for future success is expressed in the Present Simple.",
+                        explanation: "'If you prepare (Present Simple)... you will achieve (will + base verb)'."
+                    },
+                    {
+                        category: "First Conditional (Imperative Result)",
+                        prompt: "If you need immediate assistance with your research, _______ the writing center desk.",
+                        options: ["call", "will call", "called", "would call"],
+                        correct: "call",
+                        conceptCue: "Concept Cue: First conditional instructions can use an imperative verb in the main clause.",
+                        explanation: "Direct instruction paired with a real condition: 'If you need... call (imperative base verb)'."
+                    },
+                    {
+                        category: "First Conditional (Warning/Urgency)",
+                        prompt: "If we do not submit the project proposal before 14:00, the committee _______ our funding.",
+                        options: ["will withdraw", "withdraws", "withdrew", "would withdraw"],
+                        correct: "will withdraw",
+                        conceptCue: "Concept Cue: Real future penalty/warning takes 'will + base verb'.",
+                        explanation: "Consequence of missing the deadline: 'the committee will withdraw our funding'."
+                    }
+                ],
+
+                // ================= STAGE 3 (SECOND CONDITIONAL: UNREAL / HYPOTHETICAL PRESENT) =================
+                [
+                    {
+                        category: "Second Conditional (Hypothetical Situation)",
+                        prompt: "If I _______ more free time this semester, I would join the university astronomy club.",
+                        options: ["had", "have", "will have", "would have"],
+                        correct: "had",
+                        conceptCue: "Concept Cue: Second Conditional expresses imaginary/unreal present situations: [If + Past Simple, ... would + base verb].",
+                        explanation: "Hypothetical present: [If + had (Past Simple), ... I would join (would + base)]."
+                    },
+                    {
+                        category: "Second Conditional (Subjunctive 'Were' for All Persons)",
+                        prompt: "If Officer Aisha _______ the head of the department, she would reform the shift schedule.",
+                        options: ["were", "is", "will be", "would be"],
+                        correct: "were",
+                        conceptCue: "Concept Cue: In formal academic English, the Second Conditional uses 'were' for all subjects (including I/he/she/it).",
+                        explanation: "Hypothetical condition with third-person singular takes subjunctive 'were': 'If Officer Aisha were...'."
+                    },
+                    {
+                        category: "Second Conditional (Main Clause Modal: Would)",
+                        prompt: "If students studied in a quiet library environment, they _______ fewer careless errors.",
+                        options: ["would make", "will make", "made", "had made"],
+                        correct: "would make",
+                        conceptCue: "Concept Cue: The main clause of the Second Conditional requires [would / could / might + base verb].",
+                        explanation: "Hypothetical consequence: [If + studied (Past Simple), ... would make (would + base)]."
+                    },
+                    {
+                        category: "Second Conditional (Unreal Ability: Could)",
+                        prompt: "If the lab had modern biometric equipment, the technicians _______ trace the suspect faster.",
+                        options: ["could", "can", "will", "shall"],
+                        correct: "could",
+                        conceptCue: "Concept Cue: Use 'could' to express hypothetical ability in the Second Conditional result clause.",
+                        explanation: "'Could trace' expresses imaginary present ability contingent on having modern equipment."
+                    },
+                    {
+                        category: "Second Conditional (Fixed Advice Formula: If I were you)",
+                        prompt: "If I were in your position, I _______ the instructor for extra clarification.",
+                        options: ["would ask", "will ask", "asked", "am asking"],
+                        correct: "would ask",
+                        conceptCue: "Concept Cue: The classic formula for giving advice is [If I were you, I would + base verb].",
+                        explanation: "Hypothetical advice: 'If I were in your position, I would ask...'."
+                    },
+                    {
+                        category: "Second Conditional (Reversed Clause Order)",
+                        prompt: "The detectives would solve the mystery much sooner if the witness _______ more cooperative.",
+                        options: ["were", "is", "will be", "would be"],
+                        correct: "were",
+                        conceptCue: "Concept Cue: The 'if' clause takes the Past Simple/subjunctive 'were', not 'would'.",
+                        explanation: "Hypothetical condition: 'if the witness were more cooperative' pairs with 'would solve'."
+                    },
+                    {
+                        category: "Second Conditional (Negative Condition)",
+                        prompt: "If the university _______ digital portals, students would have to submit physical papers daily.",
+                        options: ["did not have", "does not have", "will not have", "had not had"],
+                        correct: "did not have",
+                        conceptCue: "Concept Cue: Negative hypothetical present conditions take 'did not + base verb'.",
+                        explanation: "Hypothetical negation: 'If the university did not have...'."
+                    },
+                    {
+                        category: "Second Conditional (Negative Result)",
+                        prompt: "If I won a major academic award, I _______ my dedication to research.",
+                        options: ["would not abandon", "will not abandon", "did not abandon", "do not abandon"],
+                        correct: "would not abandon",
+                        conceptCue: "Concept Cue: Negative hypothetical result takes 'would not + base verb'.",
+                        explanation: "Imaginary future/present: 'If I won (Past Simple)... I would not abandon (would not + base)'."
+                    },
+                    {
+                        category: "Second Conditional (Question Formulation)",
+                        prompt: "Where would you travel if you _______ a free airline ticket anywhere in the world?",
+                        options: ["received", "receive", "will receive", "would receive"],
+                        correct: "received",
+                        conceptCue: "Concept Cue: Questions with 'Where would you...' require Past Simple in the conditional clause.",
+                        explanation: "Hypothetical inquiry: 'Where would you travel if you received (Past Simple)...'."
+                    },
+                    {
+                        category: "Second Conditional (Modal of Possibility: Might)",
+                        prompt: "If we changed our study methods, our semester grades _______ improve slightly.",
+                        options: ["might", "may", "will", "shall"],
+                        correct: "might",
+                        conceptCue: "Concept Cue: 'Might + base verb' expresses tentative hypothetical possibility.",
+                        explanation: "'Might improve' expresses a tentative unreal possibility paired with 'If we changed'."
+                    }
+                ],
+
+                // ================= STAGE 4 (THIRD CONDITIONAL: PAST COUNTERFACTUALS & REGRETS) =================
+                [
+                    {
+                        category: "Third Conditional (Past Counterfactual)",
+                        prompt: "If the night watchman _______ the perimeter gates, the intruder would not have entered.",
+                        options: ["had locked", "locked", "has locked", "would lock"],
+                        correct: "had locked",
+                        conceptCue: "Concept Cue: Third Conditional expresses unchangeable past counterfactuals: [If + Past Perfect (had + V3), ... would have + V3].",
+                        explanation: "Past event that did not happen: [If + had locked (Past Perfect), ... would not have entered (would have + V3)]."
+                    },
+                    {
+                        category: "Third Conditional (Result Clause Structure)",
+                        prompt: "If Tariq had reviewed the grammar guidelines, he _______ the comma splice error.",
+                        options: ["would have avoided", "would avoid", "will avoid", "had avoided"],
+                        correct: "would have avoided",
+                        conceptCue: "Concept Cue: The main clause of the Third Conditional strictly requires [would have + past participle (V3)].",
+                        explanation: "Past hypothetical result: 'he would have avoided (would have + V3)'."
+                    },
+                    {
+                        category: "Third Conditional (Negative Condition)",
+                        prompt: "If the driver _______ his vehicle at the red light, the collision would not have occurred.",
+                        options: ["had not stopped", "did not stop", "has not stopped", "would not stop"],
+                        correct: "had not stopped",
+                        conceptCue: "Concept Cue: Negative condition in the past requires 'had not + past participle (V3)'.",
+                        explanation: "Counterfactual past condition: 'If the driver had not stopped...'."
+                    },
+                    {
+                        category: "Third Conditional (Reversed Clause Order)",
+                        prompt: "The forensic team would have cracked the code much sooner if they _______ the encrypted hard drive.",
+                        options: ["had found", "found", "have found", "would find"],
+                        correct: "had found",
+                        conceptCue: "Concept Cue: Even when placed second, the 'if' clause takes the Past Perfect (had + V3).",
+                        explanation: "'If they had found (Past Perfect)' provides the counterfactual condition for 'would have cracked'."
+                    },
+                    {
+                        category: "Third Conditional (Past Modal Ability: Could Have)",
+                        prompt: "If the border guards had known about the stolen vehicle, they _______ the suspect immediately.",
+                        options: ["could have intercepted", "could intercept", "can intercept", "intercepted"],
+                        correct: "could have intercepted",
+                        conceptCue: "Concept Cue: Use 'could have + V3' to express unfulfilled past capability or possibility.",
+                        explanation: "Unfulfilled past capability: 'they could have intercepted (could have + V3)'."
+                    },
+                    {
+                        category: "Third Conditional (Contracted Speech Form)",
+                        prompt: "If she had arrived at the airport ten minutes earlier, she _______ the flight to Salalah.",
+                        options: ["would have caught", "will catch", "caught", "would caught"],
+                        correct: "would have caught",
+                        conceptCue: "Concept Cue: Standard counterfactual result requires auxiliary 'have' before the V3 participle.",
+                        explanation: "'She would have caught' is the standard Third Conditional result matching 'had arrived'."
+                    },
+                    {
+                        category: "Third Conditional (Common Mistake: 'would have' in If-clause)",
+                        prompt: "Which sentence features the grammatically correct Third Conditional structure?",
+                        options: [
+                            "If you had warned me, I would have prepared the dossier.",
+                            "If you would have warned me, I would have prepared the dossier.",
+                            "If you had warned me, I had prepared the dossier.",
+                            "If you warned me, I would have prepared the dossier."
+                        ],
+                        correct: "If you had warned me, I would have prepared the dossier.",
+                        conceptCue: "Concept Cue: NEVER use 'would have' inside the 'if' clause; use 'had + V3' instead.",
+                        explanation: "Rule: The 'if' clause takes 'had warned'; 'would have' is restricted to the result clause."
+                    },
+                    {
+                        category: "Third Conditional (Past Possibility: Might Have)",
+                        prompt: "If the rain had ceased before dawn, the rescue helicopters _______ earlier.",
+                        options: ["might have departed", "might depart", "may depart", "departed"],
+                        correct: "might have departed",
+                        conceptCue: "Concept Cue: 'Might have + V3' conveys tentative past possibility in Third Conditional.",
+                        explanation: "'Might have departed' expresses a plausible but uncertain counterfactual outcome in the past."
+                    },
+                    {
+                        category: "Third Conditional (Question Formulation)",
+                        prompt: "What would the manager have done if the accountant _______ the missing funds?",
+                        options: ["had not reported", "did not report", "has not reported", "would not report"],
+                        correct: "had not reported",
+                        conceptCue: "Concept Cue: Past counterfactual question [What would X have done...] takes [if + had (not) + V3].",
+                        explanation: "Counterfactual condition: 'if the accountant had not reported (Past Perfect)'."
+                    },
+                    {
+                        category: "Third Conditional (Regret over Action)",
+                        prompt: "If I _______ that the road was closed due to wadi flooding, I would have taken the detour.",
+                        options: ["had known", "knew", "have known", "would know"],
+                        correct: "had known",
+                        conceptCue: "Concept Cue: Expressing past regret over lack of knowledge requires 'had known'.",
+                        explanation: "Counterfactual past knowledge: 'If I had known (had + V3)... I would have taken'."
+                    }
+                ],
+
+                // ================= STAGE 5 (FORENSIC ERROR HUNT: SPOT THE CONDITIONAL ERROR) =================
+                [
+                    {
+                        category: "Stage 5: Forensic Error Hunt",
+                        prompt: "Click directly on the single conditional error in the student excerpt below:",
+                        reportTitle: "Student Diagnostic 1: First Conditional Form Error",
+                        conceptCue: "Look for an incorrect use of 'will' placed inside the conditional clause.",
+                        tokens: [
+                            { text: "If", isError: false },
+                            { text: "he", isError: false },
+                            { text: "will", isError: true, correction: "omit 'will' (use 'studies')" },
+                            { text: "study", isError: false },
+                            { text: "diligently,", isError: false },
+                            { text: "he", isError: false },
+                            { text: "will", isError: false },
+                            { text: "pass", isError: false },
+                            { text: "the", isError: false },
+                            { text: "exam.", isError: false }
+                        ],
+                        fullSentence: "If he will study diligently, he will pass the exam.",
+                        explanation: "Error: 'will'. In First Conditional, the 'if' clause takes the Present Simple ('If he studies'), never 'will'."
+                    },
+                    {
+                        category: "Stage 5: Forensic Error Hunt",
+                        prompt: "Click directly on the single conditional error in the student excerpt below:",
+                        reportTitle: "Student Diagnostic 2: Second Conditional Clause Mismatch",
+                        conceptCue: "Look for a future auxiliary 'will' mistakenly used in a hypothetical Second Conditional result.",
+                        tokens: [
+                            { text: "If", isError: false },
+                            { text: "I", isError: false },
+                            { text: "had", isError: false },
+                            { text: "enough", isError: false },
+                            { text: "money,", isError: false },
+                            { text: "I", isError: false },
+                            { text: "will", isError: true, correction: "would" },
+                            { text: "buy", isError: false },
+                            { text: "that", isError: false },
+                            { text: "laptop.", isError: false }
+                        ],
+                        fullSentence: "If I had enough money, I will buy that laptop.",
+                        explanation: "Error: 'will'. A hypothetical condition with Past Simple 'had' requires 'would' in the main clause, not 'will'."
+                    },
+                    {
+                        category: "Stage 5: Forensic Error Hunt",
+                        prompt: "Click directly on the single conditional error in the student excerpt below:",
+                        reportTitle: "Student Diagnostic 3: Third Conditional 'Would Have' in If-Clause",
+                        conceptCue: "Find 'would' erroneously inserted into the counterfactual 'if' clause.",
+                        tokens: [
+                            { text: "If", isError: false },
+                            { text: "she", isError: false },
+                            { text: "would", isError: true, correction: "had" },
+                            { text: "have", isError: false },
+                            { text: "listened,", isError: false },
+                            { text: "she", isError: false },
+                            { text: "would", isError: false },
+                            { text: "have", isError: false },
+                            { text: "succeeded.", isError: false }
+                        ],
+                        fullSentence: "If she would have listened, she would have succeeded.",
+                        explanation: "Error: 'would'. The 'if' clause in Third Conditional takes the Past Perfect ('If she had listened'), never 'would have'."
+                    },
+                    {
+                        category: "Stage 5: Forensic Error Hunt",
+                        prompt: "Click directly on the single conditional error in the student excerpt below:",
+                        reportTitle: "Student Diagnostic 4: Zero Conditional Result Error",
+                        conceptCue: "Find a speculative future auxiliary used in an established scientific law.",
+                        tokens: [
+                            { text: "If", isError: false },
+                            { text: "water", isError: false },
+                            { text: "freezes,", isError: false },
+                            { text: "it", isError: false },
+                            { text: "will", isError: true, correction: "expands (Zero Conditional)" },
+                            { text: "expand", isError: false },
+                            { text: "in", isError: false },
+                            { text: "volume.", isError: false }
+                        ],
+                        fullSentence: "If water freezes, it will expand in volume.",
+                        explanation: "Error: 'will'. Scientific laws are Zero Conditionals: both clauses use Present Simple ('it expands in volume')."
+                    },
+                    {
+                        category: "Stage 5: Forensic Error Hunt",
+                        prompt: "Click directly on the single conditional error in the student excerpt below:",
+                        reportTitle: "Student Diagnostic 5: Second Conditional Verb Agreement",
+                        conceptCue: "Look for a base verb erroneously used in a hypothetical 'if' clause.",
+                        tokens: [
+                            { text: "If", isError: false },
+                            { text: "we", isError: false },
+                            { text: "know", isError: true, correction: "knew" },
+                            { text: "the", isError: false },
+                            { text: "answer,", isError: false },
+                            { text: "we", isError: false },
+                            { text: "would", isError: false },
+                            { text: "tell", isError: false },
+                            { text: "the", isError: false },
+                            { text: "teacher.", isError: false }
+                        ],
+                        fullSentence: "If we know the answer, we would tell the teacher.",
+                        explanation: "Error: 'know'. To match the hypothetical result 'would tell', the condition must be Past Simple ('knew')."
+                    },
+                    {
+                        category: "Stage 5: Forensic Error Hunt",
+                        prompt: "Click directly on the single conditional error in the student excerpt below:",
+                        reportTitle: "Student Diagnostic 6: Third Conditional Participle Error",
+                        conceptCue: "Find an uninflected base verb used after 'would have'.",
+                        tokens: [
+                            { text: "If", isError: false },
+                            { text: "they", isError: false },
+                            { text: "had", isError: false },
+                            { text: "left", isError: false },
+                            { text: "earlier,", isError: false },
+                            { text: "they", isError: false },
+                            { text: "would", isError: false },
+                            { text: "have", isError: false },
+                            { text: "catch", isError: true, correction: "caught" },
+                            { text: "the", isError: false },
+                            { text: "bus.", isError: false }
+                        ],
+                        fullSentence: "If they had left earlier, they would have catch the bus.",
+                        explanation: "Error: 'catch'. Third Conditional requires 'would have' + past participle V3 ('caught'), not base verb 'catch'."
+                    },
+                    {
+                        category: "Stage 5: Forensic Error Hunt",
+                        prompt: "Click directly on the single conditional error in the student excerpt below:",
+                        reportTitle: "Student Diagnostic 7: First Conditional Agreement",
+                        conceptCue: "Look for a missing third-person singular inflection in a real condition clause.",
+                        tokens: [
+                            { text: "If", isError: false },
+                            { text: "the", isError: false },
+                            { text: "officer", isError: false },
+                            { text: "arrive", isError: true, correction: "arrives" },
+                            { text: "on", isError: false },
+                            { text: "time,", isError: false },
+                            { text: "we", isError: false },
+                            { text: "will", isError: false },
+                            { text: "start", isError: false },
+                            { text: "the", isError: false },
+                            { text: "briefing.", isError: false }
+                        ],
+                        fullSentence: "If the officer arrive on time, we will start the briefing.",
+                        explanation: "Error: 'arrive'. Singular subject 'the officer' requires the third-person singular Present Simple 'arrives'."
+                    },
+                    {
+                        category: "Stage 5: Forensic Error Hunt",
+                        prompt: "Click directly on the single conditional error in the student excerpt below:",
+                        reportTitle: "Student Diagnostic 8: Double Conditional Marker",
+                        conceptCue: "Find redundant conjunctions pairing 'If' with 'then' redundantly in clausal syntax.",
+                        tokens: [
+                            { text: "If", isError: false },
+                            { text: "it", isError: false },
+                            { text: "rains", isError: false },
+                            { text: "tomorrow,", isError: false },
+                            { text: "so", isError: true, correction: "omit 'so'" },
+                            { text: "we", isError: false },
+                            { text: "will", isError: false },
+                            { text: "cancel", isError: false },
+                            { text: "the", isError: false },
+                            { text: "field", isError: false },
+                            { text: "trip.", isError: false }
+                        ],
+                        fullSentence: "If it rains tomorrow, so we will cancel the field trip.",
+                        explanation: "Error: 'so'. English conditional syntax prohibits connecting an 'if' clause to a main clause with coordinating 'so'."
+                    },
+                    {
+                        category: "Stage 5: Forensic Error Hunt",
+                        prompt: "Click directly on the single conditional error in the student excerpt below:",
+                        reportTitle: "Student Diagnostic 9: Past Modal Form in Third Conditional",
+                        conceptCue: "Look for an ungrammatical auxiliary 'of' used in place of 'have'.",
+                        tokens: [
+                            { text: "If", isError: false },
+                            { text: "I", isError: false },
+                            { text: "had", isError: false },
+                            { text: "known,", isError: false },
+                            { text: "I", isError: false },
+                            { text: "would", isError: false },
+                            { text: "of", isError: true, correction: "have" },
+                            { text: "called", isError: false },
+                            { text: "you.", isError: false }
+                        ],
+                        fullSentence: "If I had known, I would of called you.",
+                        explanation: "Error: 'of'. The auxiliary in Third Conditional is strictly 'have' ('would have called'), never preposition 'of'."
+                    },
+                    {
+                        category: "Stage 5: Forensic Error Hunt",
+                        prompt: "Click directly on the single conditional error in the student excerpt below:",
+                        reportTitle: "Student Diagnostic 10: Second Conditional Linking Verb",
+                        conceptCue: "Look for a present form verb used inside a hypothetical condition.",
+                        tokens: [
+                            { text: "If", isError: false },
+                            { text: "she", isError: false },
+                            { text: "is", isError: true, correction: "were" },
+                            { text: "here", isError: false },
+                            { text: "now,", isError: false },
+                            { text: "she", isError: false },
+                            { text: "would", isError: false },
+                            { text: "explain", isError: false },
+                            { text: "the", isError: false },
+                            { text: "problem.", isError: false }
+                        ],
+                        fullSentence: "If she is here now, she would explain the problem.",
+                        explanation: "Error: 'is'. To pair with hypothetical 'would explain', formal English requires subjunctive 'were' ('If she were here now')."
+                    }
+                ],
+
+                // ================= STAGE 6 (SYNTACTIC RECONSTRUCTION & CONDITIONAL ASSEMBLY) =================
+                [
+                    {
+                        category: "Stage 6: Syntax Reconstruction (Zero Conditional)",
+                        prompt: "Click the word tiles in sequence to reconstruct this Zero Conditional scientific law:",
+                        conceptCue: "Sequence: If + water + reaches + 100 degrees, + it + boils + rapidly.",
+                        words: ["If", "water", "reaches", "100", "degrees,", "it", "boils", "rapidly"],
+                        correctSentence: "If water reaches 100 degrees, it boils rapidly",
+                        explanation: "Zero Conditional: [If + Present Simple, ... Present Simple] expressing universal physical fact."
+                    },
+                    {
+                        category: "Stage 6: Syntax Reconstruction (First Conditional)",
+                        prompt: "Click the word tiles in sequence to reconstruct this First Conditional promise:",
+                        conceptCue: "Sequence: If + you + finish + your + assignment, + we + will + review + it.",
+                        words: ["If", "you", "finish", "your", "assignment,", "we", "will", "review", "it"],
+                        correctSentence: "If you finish your assignment, we will review it",
+                        explanation: "First Conditional: [If + Present Simple, ... will + base verb] for real future possibility."
+                    },
+                    {
+                        category: "Stage 6: Syntax Reconstruction (Second Conditional: Advice)",
+                        prompt: "Click the word tiles in sequence to reconstruct this Second Conditional advice:",
+                        conceptCue: "Sequence: If + I + were + you, + I + would + consult + the + instructor.",
+                        words: ["If", "I", "were", "you,", "I", "would", "consult", "the", "instructor"],
+                        correctSentence: "If I were you, I would consult the instructor",
+                        explanation: "Second Conditional advice formula: [If I were you, ... I would + base verb]."
+                    },
+                    {
+                        category: "Stage 6: Syntax Reconstruction (Third Conditional: Regret)",
+                        prompt: "Click the word tiles in sequence to reconstruct this Third Conditional counterfactual:",
+                        conceptCue: "Sequence: If + we + had + left + earlier, + we + would + have + arrived.",
+                        words: ["If", "we", "had", "left", "earlier,", "we", "would", "have", "arrived"],
+                        correctSentence: "If we had left earlier, we would have arrived",
+                        explanation: "Third Conditional: [If + Past Perfect, ... would have + V3] for an unchangeable past event."
+                    },
+                    {
+                        category: "Stage 6: Syntax Reconstruction (First Conditional: Negative)",
+                        prompt: "Click the word tiles in sequence to reconstruct this First Conditional warning:",
+                        conceptCue: "Sequence: Unless + you + study + regularly, + you + will + fail + the + exam.",
+                        words: ["Unless", "you", "study", "regularly,", "you", "will", "fail", "the", "exam"],
+                        correctSentence: "Unless you study regularly, you will fail the exam",
+                        explanation: "First Conditional with 'Unless' (= if not): [Unless + Present Simple, ... will + base]."
+                    },
+                    {
+                        category: "Stage 6: Syntax Reconstruction (Second Conditional: Hypothetical)",
+                        prompt: "Click the word tiles in sequence to reconstruct this hypothetical scenario:",
+                        conceptCue: "Sequence: If + students + read + more, + they + would + write + better.",
+                        words: ["If", "students", "read", "more,", "they", "would", "write", "better"],
+                        correctSentence: "If students read more, they would write better",
+                        explanation: "Second Conditional: [If + Past Simple (read /rɛd/), ... would + base verb]."
+                    },
+                    {
+                        category: "Stage 6: Syntax Reconstruction (Third Conditional: Prevention)",
+                        prompt: "Click the word tiles in sequence to reconstruct this past consequence:",
+                        conceptCue: "Sequence: If + the + alarm + had + rang, + we + would + have + evacuated.",
+                        words: ["If", "the", "alarm", "had", "sounded,", "we", "would", "have", "evacuated"],
+                        correctSentence: "If the alarm had sounded, we would have evacuated",
+                        explanation: "Third Conditional: [If + had + V3, ... would have + V3] expressing past counterfactual reality."
+                    },
+                    {
+                        category: "Stage 6: Syntax Reconstruction (Zero Conditional: Biological)",
+                        prompt: "Click the word tiles in sequence to reconstruct this biological truth:",
+                        conceptCue: "Sequence: When + people + exercise + daily, + their + cardiovascular + health + improves.",
+                        words: ["When", "people", "exercise", "daily,", "their", "cardiovascular", "health", "improves"],
+                        correctSentence: "When people exercise daily, their cardiovascular health improves",
+                        explanation: "Zero Conditional routine: [When + Present Simple, ... Present Simple]."
+                    },
+                    {
+                        category: "Stage 6: Syntax Reconstruction (Second Conditional: Reversed)",
+                        prompt: "Click the word tiles in sequence to reconstruct this reversed hypothetical sentence:",
+                        conceptCue: "Sequence: I + would + buy + a + car + if + I + had + a + license.",
+                        words: ["I", "would", "buy", "a", "car", "if", "I", "had", "a", "license"],
+                        correctSentence: "I would buy a car if I had a license",
+                        explanation: "Reversed Second Conditional: [Main clause with would + base] + [if + Past Simple]."
+                    },
+                    {
+                        category: "Stage 6: Syntax Reconstruction (Third Conditional: Question)",
+                        prompt: "Click the word tiles in sequence to reconstruct this counterfactual inquiry:",
+                        conceptCue: "Sequence: What + would + you + have + done + if + you + had + missed + it?",
+                        words: ["What", "would", "you", "have", "done", "if", "you", "had", "lost"],
+                        correctSentence: "What would you have done if you had lost",
+                        explanation: "Third Conditional interrogative: [What would + subject + have + V3] + [if + had + V3]."
+                    }
+                ]
+            ]
+        };
+
+        function handleStartGame(e) {
+            e.preventDefault();
+            const nameInput = document.getElementById('input-name').value.trim();
+            const secInput = document.getElementById('input-section').value.trim();
+
+            if (!nameInput || !secInput) {
+                showToast("Please enter both your Full Name and ID / Section.");
+                return;
+            }
+
+            GameData.studentName = nameInput;
+            GameData.studentSection = secInput;
+
+            document.getElementById('hud-name-display').textContent = GameData.studentName;
+            document.getElementById('hud-student-tag').style.display = 'flex';
+            document.getElementById('stage-nav-bar').style.display = 'block';
+
+            document.getElementById('screen-login').style.display = 'none';
+            document.getElementById('screen-gameplay').style.display = 'block';
+
+            startClassroomTimer();
+            renderCurrentQuestion();
+        }
+
+        function startClassroomTimer() {
+            GameData.timerInterval = setInterval(() => {
+                if (GameData.timerRunning && GameData.timerSeconds > 0) {
+                    GameData.timerSeconds--;
+                    const m = Math.floor(GameData.timerSeconds / 60);
+                    const s = GameData.timerSeconds % 60;
+                    document.getElementById('timer-display').textContent = 
+                        `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+                }
+            }, 1000);
+
+            document.getElementById('timer-toggle-btn').addEventListener('click', () => {
+                GameData.timerRunning = !GameData.timerRunning;
+                document.getElementById('timer-toggle-btn').textContent = GameData.timerRunning ? '⏸' : '▶';
+            });
+        }
+
+        function renderCurrentQuestion() {
+            for (let i = 1; i <= 6; i++) {
+                const node = document.getElementById(`step-node-${i}`);
+                node.className = 'step-bubble';
+                if (i < GameData.currentStage) node.classList.add('done');
+                if (i === GameData.currentStage) node.classList.add('current');
+            }
+
+            GameData.lockedAnswerForCurrent = null;
+            document.getElementById('btn-next-question').disabled = true;
+            document.getElementById('lock-status-text').textContent = "Select an option to immediately lock your answer.";
+
+            const stageNum = GameData.currentStage;
+            const qIdx = GameData.currentQuestionIdx;
+
+            document.getElementById('stage-badge-text').textContent = `STAGE ${stageNum} OF 6`;
+            document.getElementById('question-tracker').textContent = `Item ${qIdx + 1} of 10`;
+
+            const stageTitles = [
+                "Stage 1: Zero Conditional (Scientific & General Truths)",
+                "Stage 2: First Conditional (Real Future Possibilities & Warnings)",
+                "Stage 3: Second Conditional (Hypothetical & Unreal Present Scenarios)",
+                "Stage 4: Third Conditional (Past Counterfactuals & Regrets)",
+                "Stage 5: Forensic Error Hunt (Spot the Conditional Flaw)",
+                "Stage 6: Syntactic Reconstruction & Sentence Assembly"
+            ];
+
+            const stageDescs = [
+                "Universal truths, scientific facts, and automatic routines: [If/When + Present Simple, ... Present Simple].",
+                "Real conditions and plausible future consequences: [If + Present Simple, ... will/can + base verb].",
+                "Imaginary present/future situations: [If + Past Simple / were, ... would/could/might + base verb].",
+                "Past situations that cannot be changed: [If + Past Perfect (had + V3), ... would/could have + V3].",
+                "Targeted Forensic Inspection: Click directly on authentic conditional mistakes in student sentences.",
+                "Reconstruct complete academic conditional sentences from scrambled tiles under countdown constraints."
+            ];
+
+            document.getElementById('stage-title-text').textContent = stageTitles[stageNum - 1];
+            document.getElementById('stage-desc-text').textContent = stageDescs[stageNum - 1];
+
+            const item = GameData.stages[stageNum - 1][qIdx];
+            const container = document.getElementById('dynamic-stage-body');
+            container.innerHTML = '';
+
+            if (stageNum <= 4) {
+                renderStandardMCQ(container, item);
+            } else if (stageNum === 5) {
+                renderErrorHunt(container, item);
+            } else if (stageNum === 6) {
+                renderScramble(container, item);
+            }
+        }
+
+        function renderStandardMCQ(container, item) {
+            const box = document.createElement('div');
+            box.className = 'evidence-dossier-box';
+
+            box.innerHTML = `
+                <div class="concept-cue">${item.conceptCue}</div>
+                <div class="case-prompt">${item.prompt}</div>
+            `;
+
+            const optionsStack = document.createElement('div');
+            optionsStack.className = 'options-stack grid-2';
+
+            item.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'opt-btn';
+                btn.innerHTML = `
+                    <span>${opt}</span>
+                    <span class="lock-indicator">🔒 LOCKED</span>
+                `;
+
+                btn.onclick = () => {
+                    if (GameData.lockedAnswerForCurrent !== null) return;
+
+                    audio.lockSound();
+                    GameData.lockedAnswerForCurrent = opt;
+
+                    btn.classList.add('is-locked');
+                    optionsStack.querySelectorAll('.opt-btn').forEach(b => b.disabled = true);
+
+                    document.getElementById('lock-status-text').textContent = "Answer submitted and locked. Proceed to next item.";
+                    document.getElementById('btn-next-question').disabled = false;
+                };
+
+                optionsStack.appendChild(btn);
+            });
+
+            box.appendChild(optionsStack);
+            container.appendChild(box);
+        }
+
+        function renderErrorHunt(container, item) {
+            const box = document.createElement('div');
+            box.className = 'evidence-dossier-box';
+
+            box.innerHTML = `
+                <div style="color: var(--accent-gold); font-weight: 700; margin-bottom: 0.5rem;">${item.reportTitle}</div>
+                <div class="concept-cue">${item.conceptCue}</div>
+                <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.8rem;">Click on the single erroneous word or token:</div>
+            `;
+
+            const textCard = document.createElement('div');
+            textCard.className = 'forensic-text-card';
+
+            item.tokens.forEach(token => {
+                const span = document.createElement('span');
+                span.className = 'forensic-token';
+                span.textContent = token.text + ' ';
+
+                span.onclick = () => {
+                    if (GameData.lockedAnswerForCurrent !== null) return;
+
+                    audio.lockSound();
+                    span.classList.add('selected-locked');
+                    GameData.lockedAnswerForCurrent = token.text.replace(/[^a-zA-Z,;.]/g, '');
+
+                    textCard.querySelectorAll('.forensic-token').forEach(t => t.classList.add('locked'));
+                    document.getElementById('lock-status-text').textContent = `Locked target "${token.text}". Proceed to next item.`;
+                    document.getElementById('btn-next-question').disabled = false;
+                };
+
+                textCard.appendChild(span);
+            });
+
+            box.appendChild(textCard);
+            container.appendChild(box);
+        }
+
+        function renderScramble(container, item) {
+            const box = document.createElement('div');
+            box.className = 'evidence-dossier-box';
+
+            box.innerHTML = `
+                <div class="concept-cue">${item.conceptCue}</div>
+                <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.4rem;">Constructed Statement:</div>
+                <div class="scramble-target" id="scramble-dropzone">
+                    <span style="color: #475569; font-style: italic;" id="empty-placeholder">Click word tiles below in sequence...</span>
+                </div>
+                <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.4rem;">Available Words:</div>
+                <div class="scramble-pool" id="scramble-pool"></div>
+                <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+                    <button id="btn-reset-scramble" class="btn-proceed" style="background: #334155; color: #fff; font-size: 0.85rem; padding: 0.5rem 1rem;">
+                        Reset Tiles ↺
+                    </button>
+                    <button id="btn-lock-scramble" class="btn-proceed" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
+                        Lock Reconstructed Statement 🔒
+                    </button>
+                </div>
+            `;
+
+            container.appendChild(box);
+
+            const dropzone = box.querySelector('#scramble-dropzone');
+            const pool = box.querySelector('#scramble-pool');
+            const placeholder = box.querySelector('#empty-placeholder');
+            const resetBtn = box.querySelector('#btn-reset-scramble');
+            const lockBtn = box.querySelector('#btn-lock-scramble');
+
+            const shuffled = [...item.words].sort(() => Math.random() - 0.5);
+
+            shuffled.forEach(w => {
+                const tile = document.createElement('span');
+                tile.className = 'tile-word';
+                tile.textContent = w;
+                tile.dataset.word = w;
+
+                tile.onclick = () => {
+                    if (lockBtn.disabled) return;
+                    audio.playTone(350, 'sine', 0.05, 0.08);
+
+                    if (tile.parentElement === pool) {
+                        placeholder.style.display = 'none';
+                        dropzone.appendChild(tile);
+                    } else {
+                        pool.appendChild(tile);
+                        if (dropzone.children.length === 1) placeholder.style.display = 'inline';
+                    }
+                };
+
+                pool.appendChild(tile);
+            });
+
+            resetBtn.onclick = () => {
+                if (lockBtn.disabled) return;
+                dropzone.querySelectorAll('.tile-word').forEach(t => pool.appendChild(t));
+                placeholder.style.display = 'inline';
+            };
+
+            lockBtn.onclick = () => {
+                const wordsInDrop = Array.from(dropzone.querySelectorAll('.tile-word')).map(t => t.dataset.word);
+                if (wordsInDrop.length < item.words.length) {
+                    showToast(`Please sequence all ${item.words.length} words before locking.`);
+                    return;
+                }
+
+                audio.lockSound();
+                GameData.lockedAnswerForCurrent = wordsInDrop.join(' ');
+
+                lockBtn.disabled = true;
+                resetBtn.disabled = true;
+                dropzone.querySelectorAll('.tile-word').forEach(t => t.classList.add('locked'));
+
+                document.getElementById('lock-status-text').textContent = "Sentence locked. Proceed to next item.";
+                document.getElementById('btn-next-question').disabled = false;
+            };
+        }
+
+        function handleProceedNext() {
+            audio.advanceSound();
+
+            const stageNum = GameData.currentStage;
+            const qIdx = GameData.currentQuestionIdx;
+            const sourceItem = GameData.stages[stageNum - 1][qIdx];
+
+            let isCorrect = false;
+            let expectedDisplay = "";
+
+            if (stageNum <= 4) {
+                expectedDisplay = sourceItem.correct;
+                isCorrect = (GameData.lockedAnswerForCurrent === sourceItem.correct);
+            } else if (stageNum === 5) {
+                const errToken = sourceItem.tokens.find(t => t.isError);
+                expectedDisplay = errToken ? `${errToken.text} (Correction: ${errToken.correction})` : "";
+                const cleanExpected = errToken ? errToken.text.replace(/[^a-zA-Z,;.]/g, '') : "";
+                isCorrect = (GameData.lockedAnswerForCurrent === cleanExpected);
+            } else if (stageNum === 6) {
+                expectedDisplay = sourceItem.correctSentence;
+                isCorrect = (GameData.lockedAnswerForCurrent.trim().toLowerCase() === sourceItem.correctSentence.trim().toLowerCase());
+            }
+
+            GameData.userSubmissions.push({
+                stage: `Stage ${stageNum}`,
+                category: sourceItem.category,
+                prompt: sourceItem.prompt || sourceItem.fullSentence || sourceItem.correctSentence,
+                studentChoice: GameData.lockedAnswerForCurrent,
+                correctAnswer: expectedDisplay,
+                isCorrect: isCorrect,
+                explanation: sourceItem.explanation
+            });
+
+            if (GameData.currentQuestionIdx < 9) {
+                GameData.currentQuestionIdx++;
+                renderCurrentQuestion();
+            } else {
+                if (GameData.currentStage < 6) {
+                    GameData.currentStage++;
+                    GameData.currentQuestionIdx = 0;
+                    renderCurrentQuestion();
+                } else {
+                    renderFinalDossier();
+                }
+            }
+        }
+
+        function renderFinalDossier() {
+            clearInterval(GameData.timerInterval);
+            audio.fanfare();
+
+            document.getElementById('screen-gameplay').style.display = 'none';
+            document.getElementById('screen-dossier').style.display = 'block';
+            document.getElementById('step-node-7').classList.add('done', 'current');
+
+            const totalItems = GameData.userSubmissions.length; // 60
+            const correctCount = GameData.userSubmissions.filter(s => s.isCorrect).length;
+            const percentage = Math.round((correctCount / totalItems) * 100);
+
+            document.getElementById('dossier-student-name').textContent = GameData.studentName;
+            document.getElementById('dossier-student-section').textContent = GameData.studentSection;
+            document.getElementById('dossier-score-text').textContent = `${correctCount} / ${totalItems} (${percentage}%)`;
+
+            const rankBox = document.getElementById('dossier-rank-container');
+            let rankClass = "rating-cadet";
+            let rankTitle = "Cadet in Training (<70%)";
+
+            if (percentage >= 85) {
+                rankClass = "rating-master";
+                rankTitle = "Master Grammarian (85%+ Exceptional)";
+            } else if (percentage >= 70) {
+                rankClass = "rating-senior";
+                rankTitle = "Senior Editor (70–84% Competent)";
+            }
+
+            rankBox.innerHTML = `<span class="rating-badge ${rankClass}">🎖️ ${rankTitle}</span>`;
+
+            const tbody = document.getElementById('dossier-table-body');
+            tbody.innerHTML = '';
+
+            GameData.userSubmissions.forEach((sub, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${idx + 1}</strong></td>
+                    <td>
+                        <div style="font-weight: 700; color: var(--accent-gold);">${sub.category}</div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);">${sub.stage}</div>
+                    </td>
+                    <td>${sub.prompt}</td>
+                    <td>
+                        <span class="status-pill ${sub.isCorrect ? 'correct' : 'incorrect'}">
+                            ${sub.isCorrect ? '✓' : '✗'} ${sub.studentChoice}
+                        </span>
+                    </td>
+                    <td style="color: #38bdf8; font-weight: 600;">${sub.correctAnswer}</td>
+                    <td style="font-size: 0.82rem; color: #cbd5e1;">${sub.explanation}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+    </script>
+</body>
+</html>
